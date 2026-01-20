@@ -14,8 +14,8 @@
   - [Data Fields](#data-fields)
   - [Cleaning Process](#cleaning-process)
 
-## Summary 
-This dataset is a cleaner version of the original dataset from the [ConFinQA repo](https://github.com/czyssrs/ConvFinQA). This dataset consists of conversational numerical reasoning questions over unstructured financial documents, containing datatables. 
+## Summary
+This is a cleaned version of the original dataset from the [ConvFinQA repo](https://github.com/czyssrs/ConvFinQA). The dataset consists of conversational numerical reasoning questions over unstructured financial documents containing datatables. 
 
 ## Useful Extracts from the Paper
 > CONVFINQA (Conversational Finance Question Answering), with 3,892 conversations consisting of 14,115 questions. To construct the dataset, we design a framework to simulate the conversation flow by decomposition and concatenation of the multihop questions from the FinQA dataset.
@@ -110,7 +110,7 @@ class ConvFinQARecord(BaseModel):
     id: str = Field(description="The id of the record")
     doc: Document = Field(description="The document")
     dialogue: Dialogue = Field(description="The conversational dialogue")
-    features: Features = Field(description="The features of the record, created by Tomoro to help you understand the data")
+    features: Features = Field(description="Computed features describing characteristics of the record")
 
 
 class Document(BaseModel):
@@ -157,14 +157,12 @@ class Features(BaseModel):
 
 ### Cleaning Process
 
-The original data is in a messy disorganised state with a lot of errors in the original OCR process. We have cleaned it for you for the purpose of this task. Though it is not perfect.
+The original data contained errors from the OCR process and organizational issues. This version includes the following cleaning steps:
 
+**Tables:**
+- Fixed duplicate column headers by inspecting the original table or suffixing duplicates with a number when no algorithmic fix was available (e.g. 'Revenue (1)' or 'Revenue (2)')
+- Converted values to numeric format where applicable (e.g. negative values written as '(12345)' or '-12345 (12345)' are normalized to -12345.0)
 
-
-**Tables:** 
-- Fix duplicate column headers, either by inspecting the original table or by suffixing the duplicate column headers with a number if there was no algorithmic fix. e.g. 'Revenue (1)' or 'Revenue (2)'
-- Convert all values to numeric where applicable, e.g. negative values are sometimes written as '(12345)' or '-12345 (12345)' when they should be -12345.0
-
-**Dialogue:** 
-- Answer list is now the correct length and corresponds to the number of the dialogue questions
-- Answer list contains the correct answers for each conversational question instead of placeholder values located in multiple places
+**Dialogue:**
+- Answer lists are the correct length and correspond to the number of dialogue questions
+- Answer lists contain the correct answers for each conversational question rather than placeholder values
