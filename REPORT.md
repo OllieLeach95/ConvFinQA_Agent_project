@@ -52,7 +52,7 @@ This two-tier pipeline confirmed no strict data loss. However, it did reveal a m
 - Decision:
   - Provided a python maths tool (`src/agent/tools.py`) to ensure deterministic outputs.
 - Rationale:
-  - LLMs excel at formula creation, but struggle when it comes to actually performing calculations, the results for this QA task must be deterministic so we need to prohibit the LLM from performing any calculations itself. Adding a maths tool lets the LLM create the formula and act as a translator.
+  - LLMs excel at formula creation, but struggle when it comes to actually performing calculations, the results for this QA task must be deterministic so I need to prohibit the LLM from performing any calculations itself. Adding a maths tool lets the LLM create the formula and act as a translator.
 
 #### Pydantic
 
@@ -130,7 +130,7 @@ I mapped three tiers of intelligence against three tiers of orchestration:
 
 
 ### The Production-Grade Refactor
-As the complexity of the study grew, I migrated the codebase from a a few flat execution scripts to a modular, Production-Grade Architecture. This refactor was  done with alot of LLM guidance:
+As the complexity of the study grew, I migrated the codebase from a a few flat execution scripts to a modular, Production-Grade Architecture:
 
 *   Separation of Concerns:
     *    I decoupled the system into distinct modules: `ReasoningClient` (API logic), `ContextBuilder` (Data prep), `MathTool` (Execution), and `ConvFinQAManager` (Orchestration).
@@ -156,7 +156,7 @@ During the testing of Condition 11 (Reflect High), I saw occasions where the  Re
 2.  **Auditor State:** Flagged the negative sign as a failure. Despite the XML instructions, the Reviewer seemed to have a bias where a "difference" or "decrease" should be described as a positive.
 3.  **Self-Correction:** The Analyst, deferring to the Auditor’s feedback, "fixed" the expression to a positive value, turning a successful result into an error.
 
-Despite a quick round of prompt engineering to fix this, the reviewer consistently tried to correct negative numbers to positive. This is something that we could change for next time by introducing dynamic prompting depending on whether a negative sign has been produced in any of the ans_N results.
+Despite a quick round of prompt engineering to fix this, the reviewer consistently tried to correct negative numbers to positive. This is something that I could change for next time by introducing dynamic prompting depending on whether a negative sign has been produced in any of the ans_N results.
 
 
 ---
@@ -239,20 +239,165 @@ Correlation between Scale Errors and Accuracy: -0.96
 
 ---
 
-### 7. Further work
+### 7. Discussion
 
-#### Try non-DSL method for python expression
-The DSL method of python expression seems to have introduced many errors - it would be good to give the LLM freedome to define expressions how it wishes and work around that rather than conforming it to a set framework. 
+This section critically examines the core design decisions, their limitations, and what the results reveal about LLM behavior in multi-turn financial reasoning tasks.
 
-#### Full scale evaluation
-This study was run on a sample of just 15 records per condition (~60 turns) as such the reliability of the results is low. Evaluation costs constrained me from running a full evaluation. If i did have the means to run the full suite I'd add the following prior to doing so:
+#### 7.1 The DSL Constraint:
 
-#### Add a Scale Verification
+The decision to enforce a Domain-Specific Language (DSL) for mathematical expressions—requiring the model to output Python expressions in a strict format (e.g., `(ans_0 - ans_1) / ans_2`) was a mistake upon reflection. This approach artificially constrained the model's reasoning capabilities in several ways:
 
-Since there is a near perfect correlation between scale errors and accuracy (-0.96), implementing a more rigorous process for handling these errors will yield the greatest ROI.
+1. **Limited Freedom:** The DSL restricted the model to a narrow set of operations, preventing it from using conditional logic, string manipulation, or more complex mathematical reasoning that might be natural for certain questions.
 
-#### Transition to Asymmetric Agentic Architecture
+2. **Error Amplification:** The strict formatting requirements (literal floats and ans_N variables only) created a new category of failures. Many "Name Error" failures in the error taxonomy weren't mathematical mistakes—they were formatting violations where the model understood the problem correctly but violated DSL syntax rules.
 
-The data indicates that splitting the Planner and Analyst into separate roles caused accuracy to drop from 76.2% to 72.5%. However, the analysis on reflection proved this layer successfully clawed back lost performance by catching errors that simpler models missed. With this in mind we can take the best performing baseline model and simply add the best performing reflective layer to it. GPT Mini JSON/Markdown  baseline + GPT Mini Reflection. 
+3. **Cognitive Overhead:** Rather than letting the model focus on reasoning about financial concepts, it had to simultaneously reason about the answer AND translate that reasoning into a constrained syntax. This dual task likely contributed to the performance degradation observed in later conversation turns.
+
+**Why This Approach Was Chosen:**
+The DSL was implemented to ensure deterministic mathematical execution—a valid goal given that LLMs are unreliable at arithmetic. I needed the LLM's reasoning capabilities but couldn't trust its calculation abilities. The DSL was meant to bridge this gap, but it did so by limiting the reasoning I were trying to harness.
+
+**Alternative Approaches:**
+A more robust solution would involve:
+- **Tool-use APIs:** Allowing the model to call calculation functions with natural parameters rather than constructing constrained expressions
+- **Multi-step validation:** Letting the model propose a calculation strategy in natural language, then having a separate step translate this to executable code
+- **Hybrid systems:** Using symbolic reasoning engines for the mathematical component while letting the LLM handle semantic understanding and value extraction
+
+
+#### 7.2 The Markdown Hypothesis: Misaligned Assumptions
+
+**The Assumption:**
+The rationale for converting JSON tables to Markdown (Section 2, lines 35-40) was that "visual alignment" would help the model identify values using spatial reasoning (e.g., "the 1st value of the third column"). This assumed the model processes text with some notion of visual structure.
+
+**The Reality:**
+This assumption is likely incorrect. Transformer models process text as token sequences, not visual grids. While certain positional encodings capture sequence order, there's no evidence that Markdown's pipe-delimited columns provide meaningful "visual" advantages over well-structured JSON when both are tokenized. The model doesn't "see" vertical alignment—it processes a linear stream of tokens.
+
+**What The Data Shows:**
+The results don't support the Markdown hypothesis. Conditions comparing JSON vs Markdown at the same model tier showed marginal or inconsistent differences:
+- Condition 1 (JSON Baseline Mini): 83% accuracy—the highest overall
+- Condition 2 (MD Baseline Mini): Lower accuracy despite the supposed "visual" advantage
+
+This suggests that format choice may be less important than other factors (prompt quality, model capability, task decomposition), or that JSON's structured nature actually aids the model in certain ways that offset any supposed Markdown benefits.
+
+**Lesson:**
+Validate a hypothesis before going ahead with it. 
+
+#### 7.3 Architectural Complexity and Diminishing Returns
+
+**The Modular Penalty:**
+The shift from baseline (single-prompt) to modular architecture (Planner + Analyst) caused a significant accuracy drop—from 76.2% to 72.5%. This is counterintuitive: decomposing the task into specialized components should theoretically improve performance.
+
+**Hypotheses for the Performance Drop:**
+
+1. **Context Fragmentation:** By splitting the task across multiple agent calls, I fragmented the reasoning context. The Analyst received "coordinates" from the Planner but lost the holistic view of the problem that a single-pass model maintains.
+
+2. **Error Propagation:** In the modular setup, Planner errors cascade into Analyst failures. A single-pass model can self-correct mid-reasoning, but once the Planner outputs incorrect coordinates, the Analyst has no recovery path.
+
+3. **Prompt Overhead:** Each agent state required additional prompt scaffolding (role definitions, output schemas, handoff protocols). This consumed context budget that could have been used for examples or reasoning.
+
+4. **Over-Engineering:** The task may not have been complex enough to benefit from decomposition. For simpler financial questions, a well-prompted single model can handle both planning and execution effectively.
+
+**The Reflection Paradox:**
+Adding the Reviewer (Conditions 9-11) partially recovered lost accuracy, which seems to validate the reviewer as a valuable addition to the pipeline. It indicates that an ideal setup would be an initial large single plan and execute prompt followed by a single reviewer (two steps) as opposed to the modular 3 step process.
+
+#### 7.4 Model Tier and Reasoning Effort: Ceiling Effects
+
+**The Surprising Finding:**
+GPT-5-Mini (75.0%) and GPT-5.2 High Thinking (75.1%) showed negligible performance differences. This contradicts the intuition that "better models with more reasoning should perform better."
+
+**Possible Explanations:**
+
+1. **Task Ceiling:** The ConvFinQA task may not sufficiently challenge frontier model capabilities. If the limiting factor is prompt design, data formatting, or DSL constraints rather than reasoning depth, upgrading the model won't help.
+
+2. **Over-Thinking:** Higher reasoning effort might actually hurt performance on this task. If the model overthinks straightforward numerical lookups or second-guesses simple arithmetic, extended reasoning could introduce errors rather than corrections.
+
+3. **Evaluation Noise:** With only 15 samples, small differences may not be statistically significant. The apparent parity could be measurement noise rather than true equivalence.
+
+4. **Wrong Capabilities Tested:** The task emphasizes value extraction and formula construction—capabilities that even smaller models handle well. It doesn't stress the reasoning abilities where GPT-5.2 excels (complex multi-hop inference, abstract reasoning, edge case handling).
+
+**Trade-off Analysis:**
+From a production standpoint, this finding is valuable: if GPT-5-Mini matches GPT-5.2 High at a fraction of the cost and latency, the choice is clear. However, it also suggests the system isn't effectively leveraging the capabilities of advanced models—a sign that the task formulation or architecture may be suboptimal.
+
+#### 7.5 Error Analysis and LLM Failure Modes
+
+**Scale Errors (-0.96 Correlation with Accuracy):**
+The near-perfect negative correlation between scale errors and accuracy reveals a systematic failure mode. The model struggles to maintain numerical scale consistency (millions vs. thousands vs. raw numbers) across conversation turns. This isn't a reasoning failure—the model likely understands the relationships correctly—but a value representation failure.
+
+**Why This Happens:**
+1. **Inconsistent Grounding:** Tables present values as "10.5" with separate column headers indicating "$ millions". The model must maintain this scale annotation across turns, but this metadata gets lost as the conversation progresses.
+
+2. **Reference Ambiguity:** When questions refer to "that value" from turn N-2, the model must retrieve both the number AND its scale. The DSL format doesn't encode scale metadata, so even correct arithmetic on wrong scales produces failures.
+
+3. **Prompt Brittleness:** The directive to "use numbers exactly as they appear" (added during initial prompt engineering) helped avoid over-expansion (10.5M → 10,500,000) but created the opposite problem: the model became too literal and lost scale awareness.
+
+**Hallucinations in High Reasoning Conditions:**
+Interestingly, hallucinations only appeared in high reasoning effort conditions. This seems paradoxical, more reasoning should reduce errors, but it suggests that extended reasoning without proper grounding can lead the model to confabulate values or relationships that seem logically consistent but aren't supported by the source document.
+
+**Reviewer Positive Bias Conflict:**
+The Reviewer's tendency to "fix" mathematically correct negative values (Section 5) reveals how implicit biases in frontier models can sabotage explicit instructions. Despite XML directives to validate mathematical correctness, the Reviewer appeared to have a learned prior that "decreases" should be positive percentages—a common financial reporting convention that contradicted the task requirements.
+
+This failure mode is particularly insidious because it's a form of "helpful" behavior gone wrong: the model is trying to follow financial domain conventions it learned during pre-training, overriding the specific task instructions.
+
+#### 7.6 What This Study Reveals About LLM System Design
+
+**Key Lessons:**
+
+1. **Simplicity Often Wins:** The best-performing condition was a simple, single-pass prompt with minimal architectural overhead. Adding sophisticated multi-agent orchestration decreased performance until I added even more complexity to fix it.
+
+2. **Constraints Can Backfire:** The DSL constraint, while ensuring deterministic math, created new failure modes and limited the model's natural reasoning capabilities.
+
+3. **Assumptions Require Validation:** The Markdown hypothesis seemed plausible but wasn't validated by results, highlighting the need for empirical testing rather than intuition-driven design.
+
+4. **Model Capabilities ≠ Task Performance:** Access to frontier models (GPT-5.2) didn't translate to better outcomes, suggesting the bottleneck was system design rather than model capability.
+
+5. **Error Analysis Reveals System Weaknesses:** The scale error correlation and reviewer bias were only discovered through careful error analysis—surface-level accuracy metrics alone wouldn't have revealed these systematic issues.
+
+**Implications for Future Work:**
+Rather than further architectural complexity, improvements should focus on:
+- Redesigning the math execution interface to avoid DSL constraints
+- Implementing scale-aware value tracking across conversation turns
+- Using simpler prompts with better examples rather than more sophisticated agent orchestration
+- Conducting larger-scale evaluations to validate findings and reduce noise
+
+---
+
+### 8. Further Work
+
+#### 8.1 Redesign Math Execution Interface
+
+As discussed in Section 7.1, the DSL approach is fundamentally brittle. Future work should explore:
+
+- **Natural Language Tool Calls:** Allow the model to describe calculations in natural language, then parse these into executable functions
+- **Structured Tool APIs:** Provide explicit calculation tools (add, subtract, divide, etc.) that the model can call with named parameters rather than constructing expression strings
+- **Validation Layers:** Implement a separate validation step that checks whether the proposed calculation semantically matches the question before execution
+
+This would eliminate DSL-related Name Errors and allow the model to focus on reasoning rather than syntax compliance.
+
+#### 8.2 Scale-Aware Value Tracking
+
+Given the -0.96 correlation between scale errors and accuracy, implementing robust scale tracking is critical:
+
+- **Metadata Preservation:** When extracting values from tables, capture and preserve scale annotations (millions, thousands, percentages)
+- **Contextual Scale Resolution:** Implement a system that tracks which scale each `ans_N` variable represents, then enforces consistency in subsequent calculations
+- **Scale Verification Prompts:** Before final answer submission, explicitly prompt the model to verify that output scales match expected units
+
+#### 8.3 Full-Scale Evaluation
+
+This study evaluated only 15 records per condition (~60 turns total), limiting statistical confidence. A full evaluation would:
+
+- Run all 11 conditions across the complete test set (434 conversations)
+- Enable statistical significance testing between conditions
+- Reveal whether observed patterns (e.g., model tier parity, modular architecture penalty) hold at scale
+- Allow for more granular error analysis across conversation types (Type I vs Type II)
+
+#### 8.4 Simplified Architecture with Targeted Reflection
+
+Rather than adding architectural complexity, future iterations should:
+
+- Start with the best-performing baseline (Condition 1: GPT-5-Mini JSON)
+- Add only the reflection layer (based on Condition 9's 68.4% correction rate)
+- Skip the modular Planner/Analyst decomposition that decreased performance
+- Focus prompt engineering effort on the baseline and reviewer prompts rather than orchestration scaffolding
+
+This "asymmetric" approach would maintain simplicity while capturing the benefits of self-correction. 
 
 ---
