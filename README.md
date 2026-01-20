@@ -1,6 +1,6 @@
 # ConvFinQA Agent
 
-An agent-based system for conversational question answering over financial documents. This project implements an intelligent agent that can answer complex numerical reasoning questions about financial reports by analyzing both structured tables and unstructured text.
+An agent-based system for conversational question answering over financial documents. This project implements an intelligent agent that can answer complex numerical reasoning questions about financial reports by analysing both structured tables and unstructured text.
 
 ## About ConvFinQA
 

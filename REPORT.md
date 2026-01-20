@@ -269,7 +269,7 @@ A more robust solution would involve:
 The rationale for converting JSON tables to Markdown (Section 2, lines 35-40) was that "visual alignment" would help the model identify values using spatial reasoning (e.g., "the 1st value of the third column"). This assumed the model processes text with some notion of visual structure.
 
 **The Reality:**
-This assumption is likely incorrect. Transformer models process text as token sequences, not visual grids. While certain positional encodings capture sequence order, there's no evidence that Markdown's pipe-delimited columns provide meaningful "visual" advantages over well-structured JSON when both are tokenized. The model doesn't "see" vertical alignment—it processes a linear stream of tokens.
+This assumption is likely incorrect. Transformer models process text as token sequences, not visual grids. While certain positional encodings capture sequence order, there's no evidence that Markdown's pipe-delimited columns provide meaningful "visual" advantages over well-structured JSON when both are tokenised. The model doesn't "see" vertical alignment—it processes a linear stream of tokens.
 
 **What The Data Shows:**
 The results don't support the Markdown hypothesis. Conditions comparing JSON vs Markdown at the same model tier showed marginal or inconsistent differences:
@@ -284,7 +284,7 @@ Validate a hypothesis before going ahead with it.
 #### 7.3 Architectural Complexity and Diminishing Returns
 
 **The Modular Penalty:**
-The shift from baseline (single-prompt) to modular architecture (Planner + Analyst) caused a significant accuracy drop—from 76.2% to 72.5%. This is counterintuitive: decomposing the task into specialized components should theoretically improve performance.
+The shift from baseline (single-prompt) to modular architecture (Planner + Analyst) caused a significant accuracy drop—from 76.2% to 72.5%. This is counterintuitive: decomposing the task into specialised components should theoretically improve performance.
 
 **Hypotheses for the Performance Drop:**
 
@@ -312,7 +312,7 @@ GPT-5-Mini (75.0%) and GPT-5.2 High Thinking (75.1%) showed negligible performan
 
 3. **Evaluation Noise:** With only 15 samples, small differences may not be statistically significant. The apparent parity could be measurement noise rather than true equivalence.
 
-4. **Wrong Capabilities Tested:** The task emphasizes value extraction and formula construction—capabilities that even smaller models handle well. It doesn't stress the reasoning abilities where GPT-5.2 excels (complex multi-hop inference, abstract reasoning, edge case handling).
+4. **Wrong Capabilities Tested:** The task emphasises value extraction and formula construction—capabilities that even smaller models handle well. It doesn't stress the reasoning abilities where GPT-5.2 excels (complex multi-hop inference, abstract reasoning, edge case handling).
 
 **Trade-off Analysis:**
 From a production standpoint, this finding is valuable: if GPT-5-Mini matches GPT-5.2 High at a fraction of the cost and latency, the choice is clear. However, it also suggests the system isn't effectively leveraging the capabilities of advanced models—a sign that the task formulation or architecture may be suboptimal.
