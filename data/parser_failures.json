@@ -1,0 +1,12 @@
+[
+    {
+        "id": "Single_UAA/2018/page_40.pdf-4",
+        "type": "SILENT_FAILURE",
+        "audit_reasoning": "All rows and column headers are present and aligned and every numeric value from the JSON appears in the Markdown (thousand-separator formatting differs but is acceptable). However, there is a minor precision loss: the '% (  % ) change' for 'license' is 7.0 in the JSON but shown as 7 in the Markdown (decimal removed). Per the checking rules, this precision truncation is a minor failure; no other discrepancies or missing numbers were found."
+    },
+    {
+        "id": "Single_SNPS/2009/page_39.pdf-1",
+        "type": "SILENT_FAILURE",
+        "audit_reasoning": "Headers and row labels are correctly aligned and all numeric entries appear in the Markdown. The only discrepancy is a precision loss: JSON has -14.0 for \"% (  % ) change\" / \"$ 127.0\", while the Markdown shows -14 (decimal \".0\" dropped). No other numbers or years are missing."
+    }
+]

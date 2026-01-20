@@ -1,0 +1,647 @@
+{
+    "metadata": {
+        "id": 5,
+        "name": "5. MD Baseline (High)"
+    },
+    "accuracy": 76.19,
+    "metrics": {
+        "total_turns": 63,
+        "correct": 48,
+        "hallucinations": 1,
+        "scale_errors": 8,
+        "recovery_attempts": 0,
+        "successful_recoveries": 0
+    },
+    "detailed_results": [
+        {
+            "record_id": "Single_RE/2010/page_138.pdf-1",
+            "turn_index": 0,
+            "is_correct": true,
+            "ground_truth": 1563.0,
+            "agent_output": 1563.0,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_RE/2010/page_138.pdf-1",
+            "turn_index": 1,
+            "is_correct": true,
+            "ground_truth": 2446.0,
+            "agent_output": 2446.0,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_RE/2010/page_138.pdf-1",
+            "turn_index": 2,
+            "is_correct": false,
+            "ground_truth": -883.0,
+            "agent_output": 883.0,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_RE/2010/page_138.pdf-1",
+            "turn_index": 3,
+            "is_correct": false,
+            "ground_truth": -0.361,
+            "agent_output": 0.36099754701553555,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_MSI/2008/page_73.pdf-2",
+            "turn_index": 0,
+            "is_correct": false,
+            "ground_truth": 2.6,
+            "agent_output": -0.6000000000000001,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_MSI/2008/page_73.pdf-2",
+            "turn_index": 1,
+            "is_correct": true,
+            "ground_truth": 3.2,
+            "agent_output": 3.2,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_MSI/2008/page_73.pdf-2",
+            "turn_index": 2,
+            "is_correct": false,
+            "ground_truth": -0.6,
+            "agent_output": 2.6,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_MSI/2008/page_73.pdf-2",
+            "turn_index": 3,
+            "is_correct": false,
+            "ground_truth": -0.1875,
+            "agent_output": 0.8125,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_CDNS/2012/page_58.pdf-1",
+            "turn_index": 0,
+            "is_correct": true,
+            "ground_truth": 21.4,
+            "agent_output": 21.4,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_CDNS/2012/page_58.pdf-1",
+            "turn_index": 1,
+            "is_correct": true,
+            "ground_truth": 0.9,
+            "agent_output": 0.9,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_CDNS/2012/page_58.pdf-1",
+            "turn_index": 2,
+            "is_correct": true,
+            "ground_truth": 20.5,
+            "agent_output": 20.5,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_CDNS/2012/page_58.pdf-1",
+            "turn_index": 3,
+            "is_correct": false,
+            "ground_truth": 22.77778,
+            "agent_output": -0.9579439252336449,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_IPG/2009/page_67.pdf-4",
+            "turn_index": 0,
+            "is_correct": false,
+            "ground_truth": 6.5,
+            "agent_output": -6.5,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_IPG/2009/page_67.pdf-4",
+            "turn_index": 1,
+            "is_correct": true,
+            "ground_truth": 441.9,
+            "agent_output": 441.9,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_IPG/2009/page_67.pdf-4",
+            "turn_index": 2,
+            "is_correct": true,
+            "ground_truth": 0.01471,
+            "agent_output": -0.014709210228558499,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_IPG/2009/page_67.pdf-4",
+            "turn_index": 3,
+            "is_correct": false,
+            "ground_truth": 1.47092,
+            "agent_output": -1.4709210228558498,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_MAR/2010/page_55.pdf-1",
+            "turn_index": 0,
+            "is_correct": true,
+            "ground_truth": 868.0,
+            "agent_output": 868.0,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_MAR/2010/page_55.pdf-1",
+            "turn_index": 1,
+            "is_correct": true,
+            "ground_truth": 641.0,
+            "agent_output": 641.0,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_MAR/2010/page_55.pdf-1",
+            "turn_index": 2,
+            "is_correct": true,
+            "ground_truth": 227.0,
+            "agent_output": 227.0,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_MAR/2010/page_55.pdf-1",
+            "turn_index": 3,
+            "is_correct": true,
+            "ground_truth": 641.0,
+            "agent_output": 641.0,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_MAR/2010/page_55.pdf-1",
+            "turn_index": 4,
+            "is_correct": true,
+            "ground_truth": 0.35413,
+            "agent_output": 0.3541341653666147,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Double_BLL/2007/page_75.pdf",
+            "turn_index": 0,
+            "is_correct": true,
+            "ground_truth": 93.4,
+            "agent_output": 93.4,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Double_BLL/2007/page_75.pdf",
+            "turn_index": 1,
+            "is_correct": true,
+            "ground_truth": 46.7,
+            "agent_output": 46.7,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Double_BLL/2007/page_75.pdf",
+            "turn_index": 2,
+            "is_correct": true,
+            "ground_truth": 134.4,
+            "agent_output": 134.4,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Double_BLL/2007/page_75.pdf",
+            "turn_index": 3,
+            "is_correct": true,
+            "ground_truth": 116.4,
+            "agent_output": 116.4,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Double_BLL/2007/page_75.pdf",
+            "turn_index": 4,
+            "is_correct": true,
+            "ground_truth": 18.0,
+            "agent_output": 18.0,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Double_BLL/2007/page_75.pdf",
+            "turn_index": 5,
+            "is_correct": true,
+            "ground_truth": 0.15464,
+            "agent_output": 0.15463917525773196,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_PPG/2006/page_21.pdf-4",
+            "turn_index": 0,
+            "is_correct": true,
+            "ground_truth": 4.27,
+            "agent_output": 4.27,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_PPG/2006/page_21.pdf-4",
+            "turn_index": 1,
+            "is_correct": true,
+            "ground_truth": 3.49,
+            "agent_output": 3.49,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_PPG/2006/page_21.pdf-4",
+            "turn_index": 2,
+            "is_correct": true,
+            "ground_truth": 0.78,
+            "agent_output": 0.7799999999999994,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_PPG/2006/page_21.pdf-4",
+            "turn_index": 3,
+            "is_correct": true,
+            "ground_truth": 3.49,
+            "agent_output": 3.49,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_PPG/2006/page_21.pdf-4",
+            "turn_index": 4,
+            "is_correct": true,
+            "ground_truth": 0.2235,
+            "agent_output": 0.22349570200573046,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_AMAT/2012/page_37.pdf-3",
+            "turn_index": 0,
+            "is_correct": true,
+            "ground_truth": 0.00143,
+            "agent_output": 0.0,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_AMAT/2012/page_37.pdf-3",
+            "turn_index": 1,
+            "is_correct": true,
+            "ground_truth": 0.00101,
+            "agent_output": 0.00390004333381482,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_AMAT/2012/page_37.pdf-3",
+            "turn_index": 2,
+            "is_correct": true,
+            "ground_truth": 0.00042,
+            "agent_output": 0.0016625758651680157,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_AON/2011/page_61.pdf-3",
+            "turn_index": 0,
+            "is_correct": true,
+            "ground_truth": 1314.0,
+            "agent_output": 1314.0,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_AON/2011/page_61.pdf-3",
+            "turn_index": 1,
+            "is_correct": true,
+            "ground_truth": 1194.0,
+            "agent_output": 1194.0,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_AON/2011/page_61.pdf-3",
+            "turn_index": 2,
+            "is_correct": true,
+            "ground_truth": 120.0,
+            "agent_output": 120.0,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_AON/2011/page_61.pdf-3",
+            "turn_index": 3,
+            "is_correct": true,
+            "ground_truth": 1194.0,
+            "agent_output": 1194.0,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_AON/2011/page_61.pdf-3",
+            "turn_index": 4,
+            "is_correct": true,
+            "ground_truth": 0.1005,
+            "agent_output": 0.10050251256281408,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_ETR/2008/page_314.pdf-3",
+            "turn_index": 0,
+            "is_correct": true,
+            "ground_truth": 991.1,
+            "agent_output": 991.1,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_ETR/2008/page_314.pdf-3",
+            "turn_index": 1,
+            "is_correct": true,
+            "ground_truth": 942.1,
+            "agent_output": 942.1,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_ETR/2008/page_314.pdf-3",
+            "turn_index": 2,
+            "is_correct": true,
+            "ground_truth": 49.0,
+            "agent_output": 49.0,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_ETR/2008/page_314.pdf-3",
+            "turn_index": 3,
+            "is_correct": true,
+            "ground_truth": 37.5,
+            "agent_output": 37.5,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_ETR/2008/page_314.pdf-3",
+            "turn_index": 4,
+            "is_correct": false,
+            "ground_truth": 0.76531,
+            "agent_output": 0.03783674704873373,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_CB/2009/page_81.pdf-1",
+            "turn_index": 0,
+            "is_correct": true,
+            "ground_truth": 37783.0,
+            "agent_output": 37783.0,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_CB/2009/page_81.pdf-1",
+            "turn_index": 1,
+            "is_correct": true,
+            "ground_truth": 37176.0,
+            "agent_output": 37176.0,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_CB/2009/page_81.pdf-1",
+            "turn_index": 2,
+            "is_correct": true,
+            "ground_truth": 607.0,
+            "agent_output": 607.0,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_CB/2009/page_81.pdf-1",
+            "turn_index": 3,
+            "is_correct": true,
+            "ground_truth": 37176.0,
+            "agent_output": 37176.0,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_CB/2009/page_81.pdf-1",
+            "turn_index": 4,
+            "is_correct": true,
+            "ground_truth": 0.01633,
+            "agent_output": 0.016327738325801592,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_BLL/2007/page_87.pdf-2",
+            "turn_index": 0,
+            "is_correct": false,
+            "ground_truth": 5.7,
+            "agent_output": 8.6,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_BLL/2007/page_87.pdf-2",
+            "turn_index": 1,
+            "is_correct": true,
+            "ground_truth": 3.2,
+            "agent_output": 3.2,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_BLL/2007/page_87.pdf-2",
+            "turn_index": 2,
+            "is_correct": false,
+            "ground_truth": 2.5,
+            "agent_output": 5.3999999999999995,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_BLL/2007/page_87.pdf-2",
+            "turn_index": 3,
+            "is_correct": false,
+            "ground_truth": -8.2,
+            "agent_output": -32.6,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_GS/2012/page_50.pdf-1",
+            "turn_index": 0,
+            "is_correct": true,
+            "ground_truth": 22956.0,
+            "agent_output": 22956.0,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_GS/2012/page_50.pdf-1",
+            "turn_index": 1,
+            "is_correct": true,
+            "ground_truth": 22642.0,
+            "agent_output": 22642.0,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_GS/2012/page_50.pdf-1",
+            "turn_index": 2,
+            "is_correct": true,
+            "ground_truth": 314.0,
+            "agent_output": 314.0,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_GS/2012/page_50.pdf-1",
+            "turn_index": 3,
+            "is_correct": true,
+            "ground_truth": 0.01387,
+            "agent_output": 0.01386803285928805,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_IPG/2016/page_37.pdf-3",
+            "turn_index": 0,
+            "is_correct": false,
+            "ground_truth": 1665.8,
+            "agent_output": 1100.6,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_IPG/2016/page_37.pdf-3",
+            "turn_index": 1,
+            "is_correct": false,
+            "ground_truth": 565.2,
+            "agent_output": -409.10000000000014,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_IPG/2016/page_37.pdf-3",
+            "turn_index": 2,
+            "is_correct": false,
+            "ground_truth": 0.3393,
+            "agent_output": -0.270980989600583,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_AMT/2005/page_83.pdf-1",
+            "turn_index": 0,
+            "is_correct": true,
+            "ground_truth": 1187170.0,
+            "agent_output": 1187170.0,
+            "metrics": {
+                "was_recovered": false
+            }
+        },
+        {
+            "record_id": "Single_AMT/2005/page_83.pdf-1",
+            "turn_index": 1,
+            "is_correct": true,
+            "ground_truth": 0.52221,
+            "agent_output": 0.5222103357327229,
+            "metrics": {
+                "was_recovered": false
+            }
+        }
+    ]
+}
