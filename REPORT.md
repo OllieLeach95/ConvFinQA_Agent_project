@@ -299,22 +299,21 @@ The shift from baseline (single-prompt) to modular architecture (Planner + Analy
 **The Reflection Paradox:**
 Adding the Reviewer (Conditions 9-11) partially recovered lost accuracy, which seems to validate the reviewer as a valuable addition to the pipeline. It indicates that an ideal setup would be an initial large single plan and execute prompt followed by a single reviewer (two steps) as opposed to the modular 3 step process.
 
-#### 7.4 Model Tier and Reasoning Effort: Ceiling Effects
+#### 7.4 Model Tier and Reasoning Effort:
 
-**The Surprising Finding:**
-GPT-5-Mini (75.0%) and GPT-5.2 High Thinking (75.1%) showed negligible performance differences. This contradicts the intuition that "better models with more reasoning should perform better."
+**Main Takeaway:**
+GPT-5-Mini (75.0%) and GPT-5.2 High Thinking (75.1%) showed negligible performance differences. This contradicts the notion that better models with more reasoning should perform better.
 
 **Possible Explanations:**
 
-1. **Task Ceiling:** The ConvFinQA task may not sufficiently challenge frontier model capabilities. If the limiting factor is prompt design, data formatting, or DSL constraints rather than reasoning depth, upgrading the model won't help.
+1. The ConvFinQA task may not sufficiently challenge frontier model capabilities. If the limiting factor is prompt design, data formatting, or DSL constraints rather than reasoning depth, upgrading the model won't help.
 
-2. **Over-Thinking:** Higher reasoning effort might actually hurt performance on this task. If the model overthinks straightforward numerical lookups or second-guesses simple arithmetic, extended reasoning could introduce errors rather than corrections.
+2. Higher reasoning effort might actually hurt performance on this task. If the model overthinks straightforward numerical lookups or second-guesses simple arithmetic, extended reasoning could introduce errors rather than corrections.
 
-3. **Evaluation Noise:** With only 15 samples, small differences may not be statistically significant. The apparent parity could be measurement noise rather than true equivalence.
+3. With only 15 samples, small differences may not be statistically significant. The apparent parity could be measurement noise rather than true equivalence.
 
-4. **Wrong Capabilities Tested:** The task emphasises value extraction and formula construction—capabilities that even smaller models handle well. It doesn't stress the reasoning abilities where GPT-5.2 excels (complex multi-hop inference, abstract reasoning, edge case handling).
+4. The tasks often emphasises value extraction and formula construction—capabilities that even smaller models handle well. It doesn't stress the reasoning abilities where GPT-5.2 excels.
 
-**Trade-off Analysis:**
 From a production standpoint, this finding is valuable: if GPT-5-Mini matches GPT-5.2 High at a fraction of the cost and latency, the choice is clear. However, it also suggests the system isn't effectively leveraging the capabilities of advanced models—a sign that the task formulation or architecture may be suboptimal.
 
 #### 7.5 Error Analysis and LLM Failure Modes
@@ -332,7 +331,7 @@ The near-perfect negative correlation between scale errors and accuracy reveals 
 **Hallucinations in High Reasoning Conditions:**
 Interestingly, hallucinations only appeared in high reasoning effort conditions. This seems paradoxical, more reasoning should reduce errors, but it suggests that extended reasoning without proper grounding can lead the model to confabulate values or relationships that seem logically consistent but aren't supported by the source document.
 
-**Reviewer Positive Bias Conflict:**
+**Reviewer Positive Bias:**
 The Reviewer's tendency to "fix" mathematically correct negative values (Section 5) reveals how implicit biases in frontier models can sabotage explicit instructions. Despite XML directives to validate mathematical correctness, the Reviewer appeared to have a learned prior that "decreases" should be positive percentages—a common financial reporting convention that contradicted the task requirements.
 
 This failure mode is particularly insidious because it's a form of "helpful" behavior gone wrong: the model is trying to follow financial domain conventions it learned during pre-training, overriding the specific task instructions.
